@@ -34,16 +34,13 @@ form.addEventListener('submit', async event => {
         message: 'OMG!?... No images found!',
         position: 'topRight',
       });
-      return;
-    }
-
-    renderImages(images, gallery);
-    loader.classList.add('hidden');
-
-    if (!lightbox) {
-      lightbox = new SimpleLightbox('.gallery-link');
     } else {
-      lightbox.refresh();
+      renderImages(images, gallery);
+      if (!lightbox) {
+        lightbox = new SimpleLightbox('.gallery-link');
+      } else {
+        lightbox.refresh();
+      }
     }
   } catch (error) {
     iziToast.error({
@@ -118,9 +115,37 @@ body {
 }
 
 .loader {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
+   position: fixed;
+  top: 100;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 64px;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.loader:after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  margin: auto;
+  background: #222b32;
+}
+.loader:before {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  margin: auto;
+  background: #de3500;
+  animation: diamondLoader 2s linear infinite;
+}
+@keyframes diamondLoader {
+  0%  ,10% {
+    transform: translate(-64px , -64px) rotate(-45deg)
+  }
+  90% , 100% {
+    transform: translate(0px , 0px) rotate(-45deg)
+  }
 }
 
 .hidden {
@@ -155,7 +180,7 @@ input:hover {
   border-color: #000;
 }
 
-input :focus {
+input:focus {
   border-color: #4e75ff;
 }
 
@@ -183,7 +208,6 @@ button:hover {
   letter-spacing: 0.04em;
   color: #fff;
 }
-
 `;
 
 const styleSheet = document.createElement('style');
