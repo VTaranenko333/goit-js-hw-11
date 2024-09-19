@@ -1,8 +1,8 @@
-import{i as a,S as u}from"./assets/vendor-BrddEoy-.js";(function(){const i=document.createElement("link").relList;if(i&&i.supports&&i.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const n of t.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&s(n)}).observe(document,{childList:!0,subtree:!0});function o(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function s(e){if(e.ep)return;e.ep=!0;const t=o(e);fetch(e.href,t)}})();const y="46068756-c5f919e10572d3f09e9540b43",x="https://pixabay.com/api/";async function b(r){return(await(await fetch(`${x}?key=${y}&q=${r}&image_type=photo&orientation=horizontal&safesearch=true`)).json()).hits}function v(r,i){const o=r.map(({webformatURL:s,largeImageURL:e,tags:t,likes:n,views:g,comments:h,downloads:m})=>`
+import{i as s,S as u}from"./assets/vendor-BrddEoy-.js";(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))a(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const n of t.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&a(n)}).observe(document,{childList:!0,subtree:!0});function i(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function a(e){if(e.ep)return;e.ep=!0;const t=i(e);fetch(e.href,t)}})();const x="46068756-c5f919e10572d3f09e9540b43",y="https://pixabay.com/api/";async function b(r){return(await(await fetch(`${y}?key=${x}&q=${r}&image_type=photo&orientation=horizontal&safesearch=true`)).json()).hits}function v(r,o){const i=r.map(({webformatURL:a,largeImageURL:e,tags:t,likes:n,views:g,comments:m,downloads:h})=>`
       <div class="photo-card">
     <div class="photo-card-img">
       <a href="${e}" class="gallery-link">
-        <img src="${s}" alt="${t}" loading="lazy" />
+        <img src="${a}" alt="${t}" loading="lazy" />
       </a>
     </div>
     <div class="info">
@@ -16,15 +16,15 @@ import{i as a,S as u}from"./assets/vendor-BrddEoy-.js";(function(){const i=docum
       </div>
       <div class="info-item">
         <b>Comments</b>
-        <p>${h}</p>
+        <p>${m}</p>
       </div>
       <div class="info-item">
         <b>Downloads</b>
-        <p>${m}</p>
+        <p>${h}</p>
       </div>
     </div>
   </div>
-  `).join("");i.innerHTML=o}const c=document.getElementById("search-form"),p=document.getElementById("gallery"),d=document.getElementById("loader");let l;c.addEventListener("submit",async r=>{r.preventDefault();const i=c.query.value.trim();if(!i){a.warning({title:"Warning",message:"OMG!?... Please enter a search query!",position:"topRight"});return}p.innerHTML="",d.classList.remove("hidden");try{const o=await b(i);if(o.length===0){a.info({title:"Info",message:"OMG!?... No images found!",position:"topRight"});return}v(o,p),d.classList.add("hidden"),l?l.refresh():l=new u(".gallery-link")}catch{a.error({title:"Error",message:"OMG!?... Something went wrong!",position:"topRight"})}finally{d.classList.add("hidden")}});const w=`
+  `).join("");o.innerHTML=i}const l=document.getElementById("search-form"),c=document.getElementById("gallery"),p=document.getElementById("loader");let d;l.addEventListener("submit",async r=>{r.preventDefault();const o=l.query.value.trim();if(!o){s.warning({title:"Warning",message:"OMG!?... Please enter a search query!",position:"topRight"});return}c.innerHTML="",p.classList.remove("hidden");try{const i=await b(o);i.length===0?s.info({title:"Info",message:"OMG!?... No images found!",position:"topRight"}):(v(i,c),d?d.refresh():d=new u(".gallery-link"))}catch{s.error({title:"Error",message:"OMG!?... Something went wrong!",position:"topRight"})}finally{p.classList.add("hidden")}});const w=`
 h1,
 h2,
 h3,
@@ -86,9 +86,37 @@ body {
 }
 
 .loader {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
+   position: fixed;
+  top: 100;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 64px;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.loader:after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  margin: auto;
+  background: #222b32;
+}
+.loader:before {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  margin: auto;
+  background: #de3500;
+  animation: diamondLoader 2s linear infinite;
+}
+@keyframes diamondLoader {
+  0%  ,10% {
+    transform: translate(-64px , -64px) rotate(-45deg)
+  }
+  90% , 100% {
+    transform: translate(0px , 0px) rotate(-45deg)
+  }
 }
 
 .hidden {
@@ -123,7 +151,7 @@ input:hover {
   border-color: #000;
 }
 
-input :focus {
+input:focus {
   border-color: #4e75ff;
 }
 
@@ -151,6 +179,5 @@ button:hover {
   letter-spacing: 0.04em;
   color: #fff;
 }
-
 `,f=document.createElement("style");f.innerText=w;document.head.appendChild(f);
 //# sourceMappingURL=index.js.map
